@@ -30,7 +30,7 @@ class RoomProvider extends Component {
         content_type: "rooms",
         // order: "sys.createdAt",
         // order: "fields.price"
-        order: "-fields.price"
+        order: "fields.price"
       });
 
       let rooms = this.formatData(response.items);
@@ -135,7 +135,13 @@ class RoomProvider extends Component {
     return (
       <RoomContext.Provider 
         value={{
-          ...this.state,
+          rooms,
+          featuredRooms,
+          sortedRooms: rooms,
+          loading,
+          price: maxPrice,
+          maxPrice,
+          maxSize,
           getRoom: this.getRoom,
           handleChange:this.handleChange
         }}
