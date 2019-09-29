@@ -8,7 +8,8 @@ import roomContext from '../context/room/roomContext';
 
 
 
-const FeaturedRooms = () => {
+const FeaturedRooms = (props) => {
+  console.log(props)
 
   const RoomContext = useContext(roomContext); 
    console.log(RoomContext) 
@@ -21,11 +22,11 @@ const FeaturedRooms = () => {
      console.log(rooms)
      console.log(featuredRooms)
     
-  }, [loading] )
+  }, [] )
    
   
   const featuredRooms1 = featuredRooms.map( featuredRoom => (
-    <Room key={featuredRooms.id} featuredRoom={featuredRoom} />
+    <Room key={featuredRoom.id} room={featuredRoom} />
   ))
 
   return (
