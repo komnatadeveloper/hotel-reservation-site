@@ -3,13 +3,7 @@ import roomContext from './roomContext';
 import roomReducer from './roomReducer';
 
 import Client from '../../Contentful';
-import { 
-  GET_ROOMS, 
-  FILTER_ROOMS, 
-  CHANGE_THAT_STATE,
-  SET_LOADING,
-  GET_SINGLE_ROOM 
-} from '../types';
+import { GET_ROOMS, FILTER_ROOMS, CHANGE_THAT_STATE } from '../types';
 
 
 
@@ -19,7 +13,7 @@ const RoomState = (props) => {
     rooms: [],
     sortedRooms: [],
     featuredRooms: [],
-    loading: false,
+    loading: true,
     type: 'all',
     capacity: 1,
     price: 0,
@@ -36,9 +30,6 @@ const RoomState = (props) => {
 
   // get Room Data
   const getRoomsData = async () => {
-
-    setLoading(true);
-    
     try {
       let response = await Client.getEntries({
         content_type: "rooms",
@@ -50,36 +41,28 @@ const RoomState = (props) => {
       console.log(response)
 
       let rooms = formatData(response.items);
-      console.log(rooms)
       let featuredRooms = rooms.filter(room => room.featured === true);
       let maxPrice = Math.max(...rooms.map(item => item.price));
       let maxSize = Math.max(...rooms.map(item => item.size));
-      
-      
+
       
 
       dispatch( { 
         type: GET_ROOMS,
-        payload: {
-          rooms,
-          featuredRooms,
-          sortedRooms: rooms,
-          price: maxPrice,
-          maxPrice,
-          maxSize
-        }
-          
+        payload: rooms
+          // rooms,
+          // featuredRooms,
+          // sortedRooms: rooms,
+          // loading: false,
+          // price: maxPrice,
+          // maxPrice,
+          // maxSize
+        
       })
-      setLoading(false)
     } catch (err) {
-      setLoading(false)
       console.log(err);
     }
-
-
   }  // END OF get Room Data
-
-  const setLoading = (isLoading) => dispatch( { type: SET_LOADING, payload:isLoading })
 
 
   
@@ -92,31 +75,32 @@ const RoomState = (props) => {
       let room = { ...item.fields, images: images, id };
       return room;
     });
-    return tempItems;
-  };
 
-  const getSingleRoom = (slug) => {
-    let tempRooms = [...state.rooms];
+    return tempItems;
+  }
+
+  const getRoom = (slug) => {
+    let tempRooms = [...initialState.rooms];
     const room = tempRooms.find((room) => room.slug === slug);
     return room;
   };
 
-  // const filterRoomsInState = (sortedRooms) => {
-  //   dispatch({
-  //     type: FILTER_ROOMS,
-  //     payload: sortedRooms
-  //   })
-  // }
+  const filterRoomsInState = (sortedRooms) => {
+    dispatch({
+      type: FILTER_ROOMS,
+      payload: sortedRooms
+    })
+  }
 
-  // const changeThatState = ( key, value ) => {
-  //   dispatch ( { 
-  //     type: CHANGE_THAT_STATE,
-  //     payload: ( {
-  //       key,
-  //       value
-  //     })
-  //   })
-  // }
+  const changeThatState = ( key, value ) => {
+    dispatch ( { 
+      type: CHANGE_THAT_STATE,
+      payload: ( {
+        key,
+        value
+      })
+    })
+  }
 
 
   
@@ -126,7 +110,6 @@ const RoomState = (props) => {
   return (<roomContext.Provider  
     value = {{
         rooms: state.rooms,
-        loading: state.loading,
         featuredRooms: state.featuredRooms,
         sortedRooms: state.sortedRooms,
         loading: state.loading,
@@ -134,11 +117,8 @@ const RoomState = (props) => {
         maxPrice: state.maxPrice,
         maxSize: state.maxSize,
         getRoomsData,
-        setLoading,
-        getSingleRoom
-        // filterRoomsInState,
-        // changeThatState,
-
+        filterRoomsInState,
+        changeThatState
     }}
   >
     { props.children }

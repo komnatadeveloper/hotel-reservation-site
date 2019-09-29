@@ -1,20 +1,18 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import {Link} from 'react-router-dom';
 import Services from '../components/Services';
 import FeaturedRooms from '../components/FeaturedRooms';
+import RoomState from '../context/room/RoomState';
 import roomContext from '../context/room/roomContext';
 
 
 export default function Home() {
   // denemek amaçlı
-  const roomContext1 = useContext(roomContext);
-  const {  getRoomsData } = roomContext1;
-  useEffect( () => {
-    getRoomsData();
-  }, []);
-  
+  const RoomState1 = useContext(roomContext);
+  const {rooms} = RoomState1;
+  console.log(rooms)
   // denemek amaçlı
 
   return (
