@@ -11,6 +11,9 @@ import roomContext from '../context/room/roomContext';
 const  Navbar = () => {
 
   const [isOpen, setIsOpen ] = useState(false);
+  const changeToggle = () => {
+    setIsOpen(!isOpen);
+  }
   
   // const roomContext1 = useContext(roomContext);
   // console.log(roomContext1);
@@ -33,7 +36,7 @@ const  Navbar = () => {
           <button 
             type="button" 
             className="nav-btn"
-            onClick={ setIsOpen(!isOpen) }
+            onClick={changeToggle }
           >
             <FaAlignRight className="nav-icon" />
           </button>
