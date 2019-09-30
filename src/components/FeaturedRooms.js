@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-// import { RoomContext } from '../context';
-import { useContext, useEffect } from 'react';
+import React from 'react';
+import { useContext } from 'react';
 import Loading from './Loading';
 import Room from './Room';
 import Title from './Title';
@@ -8,22 +7,10 @@ import roomContext from '../context/room/roomContext';
 
 
 
-const FeaturedRooms = (props) => {
-  console.log(props)
+const FeaturedRooms = () => {
 
   const RoomContext = useContext(roomContext); 
-   console.log(RoomContext) 
-  const { loading, getRoomsData, featuredRooms, rooms } = RoomContext;
-  
-  
-  useEffect(  () => {
-    
-     getRoomsData();
-     console.log(rooms)
-     console.log(featuredRooms)
-    
-  }, [] )
-   
+  const { loading,  featuredRooms } = RoomContext;
   
   const featuredRooms1 = featuredRooms.map( featuredRoom => (
     <Room key={featuredRoom.id} room={featuredRoom} />

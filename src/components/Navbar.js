@@ -1,30 +1,19 @@
-import React, { useEffect, useContext, useState  } from 'react';
+import React, {  useState  } from 'react';
 
 import logo from '../images/logo.svg';
 import {  FaAlignRight } from 'react-icons/fa';
-import { Link, NavLink } from 'react-router-dom';
-import roomContext from '../context/room/roomContext';
+import { Link } from 'react-router-dom';
 
 
 
 
-const  Navbar = (props) => {
-  console.log(props)
+const  Navbar = () => {
 
   const [isOpen, setIsOpen ] = useState(false);
-  // const changeToggle = () => {
-  //   setIsOpen(!isOpen);
-  // }
-  
-  // const roomContext1 = useContext(roomContext);
-  // console.log(roomContext1);
-  // const { getRoomsData, rooms } = roomContext1;
 
-  // useEffect(  () => {
-  //   getRoomsData();
-  //   console.log(roomContext1);
-  // }, [])
-
+  const handleToggle = () => {
+    setIsOpen( !isOpen );
+  }
 
 
   return (
@@ -37,7 +26,7 @@ const  Navbar = (props) => {
           <button 
             type="button" 
             className="nav-btn"
-            // onClick={changeToggle }
+             onClick={handleToggle }
           >
             <FaAlignRight className="nav-icon" />
           </button>

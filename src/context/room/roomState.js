@@ -7,8 +7,7 @@ import {
   GET_ROOMS, 
   FILTER_ROOMS, 
   CHANGE_THAT_STATE,
-  SET_LOADING,
-  GET_SINGLE_ROOM 
+  SET_LOADING,   
 } from '../types';
 
 
@@ -47,16 +46,10 @@ const RoomState = (props) => {
         order: "fields.price"
       });
 
-      console.log(response)
-
       let rooms = formatData(response.items);
-      console.log(rooms)
       let featuredRooms = rooms.filter(room => room.featured === true);
       let maxPrice = Math.max(...rooms.map(item => item.price));
-      let maxSize = Math.max(...rooms.map(item => item.size));
-      
-      
-      
+      let maxSize = Math.max(...rooms.map(item => item.size)); 
 
       dispatch( { 
         type: GET_ROOMS,
@@ -75,21 +68,13 @@ const RoomState = (props) => {
       setLoading(false)
       console.log(err);
     }
-
-
   }  // END OF get Room Data
 
   const setLoading = (isLoading) => dispatch( { type: SET_LOADING, payload:isLoading })
 
   const filterRoomsInState = (tempRooms) => {
-    console.log(`temprooms `)
-    console.log(tempRooms)
     dispatch({ type: FILTER_ROOMS, payload: tempRooms })
-  }
-
-
-  
-
+  } 
   const formatData = (items) => {
     let tempItems = items.map(item => {
       let id = item.sys.id;
@@ -101,18 +86,12 @@ const RoomState = (props) => {
     return tempItems;
   };
 
-  const getSingleRoom = (slug) => {
-    let tempRooms = [...state.rooms];
+  const getSingleRoom = (slug, rooms) => {
+    let tempRooms = [...rooms];
     const room = tempRooms.find((room) => room.slug === slug);
+
     return room;
   };
-
-  // const filterRoomsInState = (sortedRooms) => {
-  //   dispatch({
-  //     type: FILTER_ROOMS,
-  //     payload: sortedRooms
-  //   })
-  // }
 
   const changeThatState = ( key, value ) => {
     dispatch ( { 
@@ -124,11 +103,6 @@ const RoomState = (props) => {
     })
   }
 
-
-  
-
-
-
   return (<roomContext.Provider  
     value = {{
         rooms: state.rooms,
@@ -139,7 +113,6 @@ const RoomState = (props) => {
         breakfast: state.breakfast,
         featuredRooms: state.featuredRooms,
         sortedRooms: state.sortedRooms,
-        loading: state.loading,
         price: state.price,
         maxPrice: state.maxPrice,
         maxSize: state.maxSize,
@@ -149,9 +122,6 @@ const RoomState = (props) => {
         getSingleRoom,
         filterRoomsInState,
         changeThatState
-        // filterRoomsInState,
-        // changeThatState,
-
     }}
   >
     { props.children }

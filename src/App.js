@@ -10,24 +10,20 @@ import Error from './pages/Error';
 
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import RoomState from './context/room/RoomState';
 import roomContext from './context/room/roomContext';
-// import RoomState from './context/room/RoomState';
-
-
-
-
-
-
 
 
 const  App = () => {
 
-
-
+  const roomContext1 = useContext(roomContext)
+  const { getRoomsData} = roomContext1;
+  useEffect(() => {
+    getRoomsData();
+    // eslint-disable-next-line
+  }, [])
 
   return (
-    <RoomState>      
+    <>      
       <BrowserRouter>        
         <Navbar />
         <Switch>
@@ -37,7 +33,7 @@ const  App = () => {
           <Route component= { Error } />
         </Switch>
       </BrowserRouter>
-    </RoomState>
+    </>
   );
 }
 
