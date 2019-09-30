@@ -41,16 +41,23 @@ export default (state, action) => {
         maxPrice: action.payload.maxPrice,
         maxSize: action.payload.maxSize
       };
-    // case FILTER_ROOMS:
-    //   return {
-    //     ...state,
-    //     featuredRooms: action.payload
-    //   }
-    // case CHANGE_THAT_STATE:
-    //   return {
-    //     ...state,
-    //     [action.payload.key]: action.payload.value
-    //   }   
+
+    case FILTER_ROOMS:
+      {
+        
+        console.log(`action.payload ${action.payload.length}`)
+        
+        return {
+          ...state,
+          sortedRooms: [...action.payload]
+        }
+      }
+
+    case CHANGE_THAT_STATE:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      }   
 
 
     default:

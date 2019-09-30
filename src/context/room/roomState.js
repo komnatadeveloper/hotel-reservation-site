@@ -81,6 +81,12 @@ const RoomState = (props) => {
 
   const setLoading = (isLoading) => dispatch( { type: SET_LOADING, payload:isLoading })
 
+  const filterRoomsInState = (tempRooms) => {
+    console.log(`temprooms `)
+    console.log(tempRooms)
+    dispatch({ type: FILTER_ROOMS, payload: tempRooms })
+  }
+
 
   
 
@@ -108,15 +114,15 @@ const RoomState = (props) => {
   //   })
   // }
 
-  // const changeThatState = ( key, value ) => {
-  //   dispatch ( { 
-  //     type: CHANGE_THAT_STATE,
-  //     payload: ( {
-  //       key,
-  //       value
-  //     })
-  //   })
-  // }
+  const changeThatState = ( key, value ) => {
+    dispatch ( { 
+      type: CHANGE_THAT_STATE,
+      payload: ( {
+        key,
+        value
+      })
+    })
+  }
 
 
   
@@ -127,15 +133,22 @@ const RoomState = (props) => {
     value = {{
         rooms: state.rooms,
         loading: state.loading,
+        capacity: state.capacity,
+        type: state.type,
+        pets: state.pets,
+        breakfast: state.breakfast,
         featuredRooms: state.featuredRooms,
         sortedRooms: state.sortedRooms,
         loading: state.loading,
         price: state.price,
         maxPrice: state.maxPrice,
         maxSize: state.maxSize,
+        minSize: state.minSize,
         getRoomsData,
         setLoading,
-        getSingleRoom
+        getSingleRoom,
+        filterRoomsInState,
+        changeThatState
         // filterRoomsInState,
         // changeThatState,
 

@@ -1,15 +1,26 @@
-import React, {useContext } from 'react'
+import React, {useContext, useEffect } from 'react'
 import RoomsFilter from './RoomsFilter';
 import RoomsList from './RoomsList';
 // import { withRoomConsumer } from '../context';
 import Loading from './Loading';
 import RoomState from '../context/room/RoomState';
+import roomContext from '../context/room/roomContext';
 
 
 
-function RoomsContainer({context}) {
-  const roomState = useContext(RoomState)
-  const { loading, sortedRooms } = roomState;
+function RoomsContainer() {
+
+
+  
+  const roomContext1 = useContext(roomContext)
+  const { loading, sortedRooms, rooms, getRoomsData } = roomContext1;
+  
+  useEffect(() => {
+    if(rooms.length === 0) {
+      getRoomsData();
+    }
+  }, [])
+
   if (loading) {
       return <Loading />
     }

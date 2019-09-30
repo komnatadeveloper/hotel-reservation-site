@@ -1,5 +1,5 @@
 import React from 'react'
-import {useContext} from 'react';
+import { useContext, useEffect} from 'react';
 // import {RoomContext} from '../context';
 import Title from './Title';
 
@@ -30,6 +30,10 @@ export default function RoomsFilter() {
     changeThatState
   } = RoomContext;
 
+  useEffect(() => {
+    filterRooms();
+  }, [type, capacity, price, breakfast, pets, minSize ])
+
   // get unique types
   let types = getUnique(rooms, 'type');
   // add all
@@ -47,56 +51,66 @@ export default function RoomsFilter() {
 
 
   const filterRooms = () => {
+    console.log(`type: ${type}`)
     // let {
     //   rooms, type, capacity, price, minSize, maxSize, breakfast, pets
     // } = this.state;
 
     // all the rooms
     let tempRooms = [...rooms];
-
+    console.log(tempRooms)
+    
     // transform value to number
-    capacity = parseInt(capacity);
-    price = parseInt(price);
-
-
+    let capacity1 = parseInt(capacity);
+    let price1 = parseInt(price);
+    console.log(tempRooms)
+    
+    
     // filter by type
     if (type !== 'all') {
       tempRooms = tempRooms.filter(room => room.type === type)
+      console.log(type, typeof(type))
+      console.log(tempRooms)
     }
-
+    
     // filter by capacity
-    if (capacity !== 1) {
-      tempRooms = tempRooms.filter(room => room.capacity >= capacity)
+    if (capacity1 !== 1) {
+      tempRooms = tempRooms.filter(room => room.capacity >= capacity1)
+      console.log(tempRooms)
     }
-
-    // filter by price
-    tempRooms = tempRooms.filter(room => room.price <= price);
-
+    
+    // // filter by price
+    tempRooms = tempRooms.filter(room => room.price <= price1);
+    console.log(tempRooms)
+    
     // filter by size
     tempRooms = tempRooms.filter(room => room.size >= minSize && room.size <= maxSize);
-
+    console.log(tempRooms)
+    
     // filter by breakfast
     if (breakfast) {
       tempRooms = tempRooms.filter(room => room.breakfast === true)
     }
-
+    console.log(tempRooms)
+    
     // filter by pets
     if (pets) {
       tempRooms = tempRooms.filter(room => room.pets === true)
+      console.log(tempRooms)
     }
 
     filterRoomsInState(tempRooms);
   } // filterRooms END
 
 
-  const handleChange = e => {
+  const handleChange =  e => {
     // const target = e.target
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     const name = e.target.name
 
     changeThatState(name, value); // whatever the name is(price, breakfast, or whatever)
 
-      filterRooms();  // after changing state,  >>>> filterRooms
+    
   }
 
   
